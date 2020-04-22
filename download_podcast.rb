@@ -33,17 +33,14 @@ doc = Nokogiri::XML.parse(response.body)
 
   org_file_path = File.join(DEST_DIR, org_file_name)
 
-  print "download: #{file_name} "
   file_path = File.join(DEST_DIR, file_name)
 
   if org_file_path != file_path && File.exist?(org_file_path)
     FileUtils.mv(org_file_path, file_path)
   end
 
-  if File.exist?(file_path)
-    puts 'skip due to already exist'
-  else
-    puts
+  unless File.exist?(file_path)
+    puts "download: #{file_name}"
     agent.download(url, file_path)
   end
 
