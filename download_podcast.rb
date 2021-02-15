@@ -3,9 +3,23 @@
 require 'bundler/setup'
 require 'fileutils'
 require 'mechanize'
+require 'yaml'
 
 DEST_DIR = File.join(__dir__, 'download')
 TARGET_URL = 'https://www.tfm.co.jp/podcasts/asemamire/podcast.xml'
+
+CONF_PATH = File.join(DEST_DIR, 'download_podcast.yml')
+
+last_download_index = 0
+
+last_index = 0
+
+if File.exist?(CONF_PATH)
+  data = YAML.load_file(CONF_PATH)
+  last_download_index = data['last_download_index'].to_i
+end
+
+puts "last_download_index: #{last_download_index}"
 
 FileUtils.mkdir_p(DEST_DIR)
 
@@ -24,6 +38,12 @@ doc = Nokogiri::XML.parse(response.body)
     break
   end
 
+  if Regexp.last_match[2].to_i <= last_download_index
+    last_index = Regexp.last_match[2].to_i if Regexp.last_match[2].to_i > last_index
+    puts "skip #{org_file_name} because it may be downloaded"
+    next
+  end
+
   # normalize 3 degit
   file_name =
     format('%s%03d%s',
@@ -35,14 +55,14 @@ doc = Nokogiri::XML.parse(response.body)
 
   file_path = File.join(DEST_DIR, file_name)
 
-  if org_file_path != file_path && File.exist?(org_file_path)
-    FileUtils.mv(org_file_path, file_path)
-  end
+  FileUtils.mv(org_file_path, file_path) if org_file_path != file_path && File.exist?(org_file_path)
 
   unless File.exist?(file_path)
     puts "download: #{file_name}"
     agent.download(url, file_path)
   end
+
+  last_index = Regexp.last_match[2].to_i if Regexp.last_match[2].to_i > last_index
 
   # verify size
   # comment out this logic
@@ -53,4 +73,8 @@ doc = Nokogiri::XML.parse(response.body)
   # puts "error: wrong file size(#{file_path})"
   # puts "  expected: #{file_size}"
   # puts "  actual  : #{actual_size}"
+end
+
+File.open(CONF_PATH, 'w+') do |f|
+  YAML.dump({ 'last_download_index' => last_index }, f)
 end
