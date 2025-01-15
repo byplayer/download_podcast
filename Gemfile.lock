@@ -1,51 +1,70 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.5)
-      public_suffix (>= 2.0.2, < 6.0)
-    connection_pool (2.4.1)
-    domain_name (0.5.20190701)
-      unf (>= 0.0.5, < 1.0.0)
-    http-cookie (1.0.5)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
+    base64 (0.2.0)
+    connection_pool (2.5.0)
+    domain_name (0.6.20240107)
+    http-cookie (1.0.8)
       domain_name (~> 0.5)
-    mechanize (2.9.1)
+    logger (1.6.5)
+    mechanize (2.14.0)
       addressable (~> 2.8)
+      base64
       domain_name (~> 0.5, >= 0.5.20190701)
       http-cookie (~> 1.0, >= 1.0.3)
-      mime-types (~> 3.0)
+      mime-types (~> 3.3)
       net-http-digest_auth (~> 1.4, >= 1.4.1)
       net-http-persistent (>= 2.5.2, < 5.0.dev)
+      nkf
       nokogiri (~> 1.11, >= 1.11.2)
       rubyntlm (~> 0.6, >= 0.6.3)
       webrick (~> 1.7)
       webrobots (~> 0.1.2)
-    mime-types (3.5.1)
+    mime-types (3.6.0)
+      logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.0808)
+    mime-types-data (3.2025.0107)
     net-http-digest_auth (1.4.1)
-    net-http-persistent (4.0.2)
+    net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
-    nokogiri (1.15.4-arm64-darwin)
+    nkf (0.2.0)
+    nokogiri (1.18.1-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.15.4-x86_64-darwin)
+    nokogiri (1.18.1-aarch64-linux-musl)
       racc (~> 1.4)
-    public_suffix (5.0.3)
-    racc (1.7.1)
-    rubyntlm (0.6.3)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8.2)
-    webrick (1.8.1)
+    nokogiri (1.18.1-arm-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.1-arm-linux-musl)
+      racc (~> 1.4)
+    nokogiri (1.18.1-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.1-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.1-x86_64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.1-x86_64-linux-musl)
+      racc (~> 1.4)
+    public_suffix (6.0.1)
+    racc (1.8.1)
+    rubyntlm (0.6.5)
+      base64
+    webrick (1.9.1)
     webrobots (0.1.2)
 
 PLATFORMS
-  arm64-darwin-21
-  arm64-darwin-22
-  x86_64-darwin-20
-  x86_64-darwin-21
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
+  x86_64-darwin
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   mechanize
 
 BUNDLED WITH
-   2.4.10
+   2.6.2
